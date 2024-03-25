@@ -130,15 +130,14 @@ int main(int argc, char *argv[])
                         // 서버가 보내는것 출력.
                         printCalender(yearToken,monthToken,calenderStr);
 
-                        // 추가!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                         // 보내기 전에 데이터 사이즈 먼저 보내기 ( 동적으로 데이터 사이즈가 변함(28~31일))
                         int dataSize = strlen(calenderStr);
                         int netDataSize = htonl(dataSize);               // network host to networok (network는 빅엔디안 방식임 따라서 리틀->빅 변환 )
                         send(client_sock, &netDataSize,  sizeof(netDataSize),0);
 
 
-                        // 데이터 보내기 // 배열로 보내야하나??.. 
-                        retval =send(client_sock, calenderStr,strlen(calenderStr), 0);
+                        // 데이터 보내기 
+                        retval = send(client_sock, calenderStr,strlen(calenderStr), 0);
                         if (retval == SOCKET_ERROR) {
                                 err_display("send()");
                                 break;
